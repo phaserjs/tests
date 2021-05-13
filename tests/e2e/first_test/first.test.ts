@@ -3,9 +3,10 @@ describe('Phaser 4 test', () => {
         await page.goto('http://localhost:30001');
     });
 
-    it('Test Phaser 4 examples', async () => {
-        await expect(page.title()).resolves.toMatch('');
-        const image = await page.screenshot({ fullPage: true });
-        expect(image).toMatchImageSnapshot({diffDirection: "vertical", comparisonMethod: "ssim", dumpDiffToConsole: false});
+    let pages = page;
+    test('Test Phaser 4 examples', async () => {
+        await expect(pages.title()).resolves.toMatch('');
+        const image = await pages.screenshot({ fullPage: true });
+        expect(image).toMatchImageSnapshot({ diffDirection: "vertical", comparisonMethod: "ssim", dumpDiffToConsole: false });
     });
-});
+})
