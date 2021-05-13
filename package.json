@@ -4,7 +4,9 @@
   "description": "Phaser 4 Unit Tests",
   "main": "index.js",
   "scripts": {
-    "test": "jest --maxWorkers=50%"
+    "server": "node jest-config/puppeteer/startServer.ts",
+    "test": "jest --maxWorkers=50% --config=jest-config/unit/jest.config.js",
+    "test:e2e": "cross-env DEBUG=test JEST_PUPPETEER_CONFIG=jest-config/puppeteer/jest-puppeteer.config.ts jest --runInBand --detectOpenHandles --config=jest-config/puppeteer/jest.config.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +21,18 @@
   "homepage": "https://github.com/phaserjs/tests#readme",
   "devDependencies": {
     "@types/jest": "^26.0.23",
+    "@types/jest-environment-puppeteer": "^4.4.1",
+    "@types/jest-image-snapshot": "^4.3.0",
+    "@types/puppeteer": "^5.4.3",
+    "cross-env": "^7.0.3",
     "jest": "^26.6.3",
+    "jest-environment-puppeteer": "^5.0.3",
+    "jest-image-snapshot": "^4.5.0",
+    "jest-puppeteer": "^5.0.3",
+    "puppeteer": "^9.1.1",
+    "rollup-plugin-serve": "^1.1.0",
     "ts-jest": "^26.5.6",
     "typescript": "^4.2.4"
-  }
+  },
+  "dependencies": {}
 }
