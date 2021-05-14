@@ -6,7 +6,8 @@
   "scripts": {
     "server": "node jest-config/puppeteer/startServer.ts",
     "test": "jest --maxWorkers=50% --config=jest-config/unit/jest.config.js",
-    "test:e2e": "cross-env DEBUG=test JEST_PUPPETEER_CONFIG=jest-config/puppeteer/jest-puppeteer.config.ts jest --runInBand --detectOpenHandles --config=jest-config/puppeteer/jest.config.js"
+    "test:e2e": "cross-env DEBUG=test JEST_PUPPETEER_CONFIG=jest-config/puppeteer/jest-puppeteer.config.ts jest --runInBand --detectOpenHandles --config=jest-config/puppeteer/jest.config.js",
+    "test:e2e:clean": "jest --runInBand --detectOpenHandles --config=jest-config/puppeteer/jest.config.js"
   },
   "repository": {
     "type": "git",
