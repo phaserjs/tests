@@ -1,12 +1,9 @@
 import { MatchImageSnapshotOptions, toMatchImageSnapshot } from "jest-image-snapshot";
+import { Page } from "puppeteer";
 expect.extend({ toMatchImageSnapshot });
 
-const createTest = () => {
-
-}
-
 describe('3D', () => {
-    let pages;
+    let pages: Page;
 
     beforeAll(async () => {
         pages = await browser.newPage();

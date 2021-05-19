@@ -4,18 +4,18 @@
   "description": "Phaser 4 Unit Tests",
   "main": "index.js",
   "scripts": {
-    "server": "node jest-config/puppeteer/startServer.ts",
-    "test": "jest --maxWorkers=50% --config=jest-config/unit/jest.config.js",
-    "test:e2e": "cross-env DEBUG=test JEST_PUPPETEER_CONFIG=jest-config/puppeteer/jest-puppeteer.config.ts jest --runInBand --detectOpenHandles --config=jest-config/puppeteer/jest.config.js",
-    "test:e2e:clean": "jest --runInBand --detectOpenHandles --config=jest-config/puppeteer/jest.config.js"
+    "test": "jest --maxWorkers=50% --config=jest.config.js --colors",
+    "test:coverage": "jest --maxWorkers=50% --coverage --config=./jest.config.js --coverageDirectory=../tests/coverage -- ../tests/tests/",
+    "server": "node jest-puppeteer-config/startServer.ts",
+    "test:e2e": "cross-env DEBUG=test JEST_PUPPETEER_CONFIG=jest-puppeteer-config/puppeteer.config.ts jest --runInBand --detectOpenHandles --config=jest-puppeteer-config/jest.config.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/phaserjs/tests.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Francisco Pereira - @gammafp",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/phaserjs/tests/issues"
   },
@@ -33,7 +33,7 @@
     "puppeteer": "^9.1.1",
     "rollup-plugin-serve": "^1.1.0",
     "ts-jest": "^26.5.6",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
-  },
-  "dependencies": {}
+  }
 }

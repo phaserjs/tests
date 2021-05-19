@@ -1,4 +1,4 @@
-import { Vec2Add, Vec2, Vec2Multiply } from '../../../../phaser-genesis/src/math/vec2';
+import { Vec2Add, Vec2, Vec2Multiply } from '../../../phaser-genesis/src/math/vec2';
 
 describe("Math test", () => {
     test('Sum two vectors [3, 6] + [4, 7] = [7, 13]', () => {
