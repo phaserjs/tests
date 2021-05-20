@@ -1,11 +1,11 @@
-const serve = require('rollup-plugin-serve');
+const serve_coverage= require('rollup-plugin-serve');
 
-serve({
+serve_coverage({
     open: true,
-    contentBase: "../dev/examples/live",
+    contentBase: "./coverage",
     verbose: false,
     host: 'localhost',
-    port: 30001,
+    port: 30002,
     // @ts-ignore
     onListening: function (server) {
         const address = server.address();

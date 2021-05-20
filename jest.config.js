@@ -1,8 +1,11 @@
+const path = require('path');
+const folderBase = path.basename(__dirname);
+
 module.exports = {
     rootDir: "../phaser-genesis",
-    roots: [`<rootDir>/../tests/tests`],
+    roots: [`<rootDir>/../tests/${folderBase}`],
     transform: {
-      '^.+\\.tsx?$': '../tests/node_modules/ts-jest/dist/index.js',
+      '^.+\\.tsx?$': `../${folderBase}/node_modules/ts-jest/dist/index.js`,
     },
     testRegex: "(/__tests__/.*|\\.(test|spec))\\.(ts)$",
     moduleFileExtensions: ['ts', 'js', 'json', 'node'],
