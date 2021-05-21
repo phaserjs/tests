@@ -27,11 +27,13 @@ Tests e2e (visual)
 
 ### Coverage page
 
-You can run the page with the actual code coverage using: 
+You can run local page coverage with:
 
 ```
 > npm run server:coverage
 ```
+or go to live page [HERE](https://phaserjs.github.io/tests/coverage/)
+
 
 ### Run single folder test
 
