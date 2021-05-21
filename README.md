@@ -1,5 +1,10 @@
 # Phaser 4 Unit Tests
 
+Install dependecies: 
+```
+> npm i
+```
+
 - Unit test folder: ``tests``   
 - Snapshot tests: ``e2e`` (this folder name could be changed in a future)
 
@@ -26,4 +31,18 @@ You can run the page with the actual code coverage using:
 
 ```
 > npm run server:coverage
+```
+
+### Run single folder test
+
+To run a single folder test, you need to have installed Jest in your computer: 
+
+```
+> npm i -g jest
+```
+
+Run folder test
+
+```
+> jest -- folder/route
 ```
