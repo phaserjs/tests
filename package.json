@@ -4,12 +4,12 @@
   "description": "Phaser 4 Unit Tests",
   "main": "index.js",
   "scripts": {
-    "test": "jest --maxWorkers=50% --config=tests/jest.config.js",
-    "test:coverage": "jest --maxWorkers=50% --coverage --config=./jest.config.js --coverageDirectory=../tests/coverage -- ../tests/tests/",
+    "test": "jest --maxWorkers=50% --config=jest.unit.config.js",
+    "test:coverage": "jest --maxWorkers=50% --coverage --config=./jest.coverage.config.js --coverageDirectory=../tests/coverage -- ../tests/tests/",
     "server:coverage": "node server-coverage-config.ts",
     "server": "node jest-puppeteer-config/startServer.ts",
     "test:e2e": "cross-env DEBUG=test JEST_PUPPETEER_CONFIG=jest-puppeteer-config/puppeteer.config.ts jest --runInBand --detectOpenHandles --config=jest-puppeteer-config/jest.config.js",
-    "test:math": "jest --maxWorkers=50% --config=tests/jest.config.js -- tests/math"
+    "test:math": "jest --maxWorkers=50% --config=jest.unit.config.js -- tests/math"
   
   },
   "repository": {
