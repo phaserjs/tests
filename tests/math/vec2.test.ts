@@ -51,7 +51,9 @@ import
     Vec2FromGridIndex,
     GetDistanceFromSegment,
     Vec2Bezier,
-    Vec2Clamp
+    Vec2Clamp,
+    Vec2Limit,
+    Vec2ClampScalar
 } from '../../../phaser-genesis/src/math/vec2';
 import { Matrix2D } from '../../../phaser-genesis/src/math/mat2d';
 import { Matrix4 } from '../../../phaser-genesis/src/math/mat4';
@@ -477,9 +479,8 @@ describe("Vec2 - tests", () =>
         expect(result).toEqual(match)
     });
 
+    // TODO: Test distance power
     // test('Vec2 Distance power', () => {
-
-    //     // TODO: Hacer esto
     //     const vec_a = new Vec2(20, 30);
     //     const vec_b = new Vec2(12, 24);
 
@@ -668,6 +669,7 @@ describe("Vec2 - tests", () =>
         
     });
 
+    // TODO: Test Bezier
     // test('Vec2 Bezier', () =>
     // {
 
@@ -706,6 +708,40 @@ describe("Vec2 - tests", () =>
         const result_in_min_max = Vec2Clamp(vec_inside_min_max, min, max);
         const match_in_min_max = new Vec2(300, 256);
         expect(result_in_min_max).toMatchObject(match_in_min_max);
+    });
+
+    test('Vec2 ClampScalar', () =>
+    {
+
+        const vec_min = new Vec2(20, 10);
+        const vec_max = new Vec2(400, 400);
+        const vec_inside_min_max = new Vec2(50, 40);
+
+        // Test min
+        const min = 30;
+        const max = 80;
+
+        const result_min = Vec2ClampScalar(vec_min, min, max);
+        const match_min = new Vec2(30, 30);
+        expect(result_min).toMatchObject(match_min);
+
+        const result_max = Vec2ClampScalar(vec_max, min, max);
+        const match_max = new Vec2(80, 80);
+        expect(result_max).toMatchObject(match_max);
+
+        const result_in_min_max = Vec2ClampScalar(vec_inside_min_max, min, max);
+        const match_in_min_max = new Vec2(50, 40);
+        expect(result_in_min_max).toMatchObject(match_in_min_max);
+    });
+
+    test('Vec2 Limit', () =>
+    {
+        const vec = new Vec2(20, 10);
+        const result = Vec2Limit(vec, 8);
+
+        const match = new Vec2(7.155417527999327, 3.5777087639996634);
+    
+        expect(result).toMatchObject(match);
     });
 
 });
