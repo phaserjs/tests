@@ -65,7 +65,7 @@ import { Matrix4 } from '../../../phaser-genesis/src/math/mat4';
 
 describe("Vec2 - tests", () =>
 {
-    test('New Vec2 {x: 3, y: 6}', () =>
+    test('New Vec2', () =>
     {
         const vec = new Vec2(3, 6);
         expect(vec).toMatchObject({ x: 3, y: 6 });
@@ -76,7 +76,7 @@ describe("Vec2 - tests", () =>
         expect(vec3).toMatchObject({x: 0, y: 0});
     });
 
-    test('New Vec2 to array {x: 3, y: 6} = [3, 6]', () =>
+    test('Vec2 to array', () =>
     {
         const vec2 = new Vec2(3, 6);
         const result = vec2.toArray();
@@ -84,7 +84,7 @@ describe("Vec2 - tests", () =>
         expect(result).toEqual(match);
     });
 
-    test('New Vec2 to string {x: 3, y: 6} = "{ x=3, y=6 }"', () =>
+    test('New Vec2 to string', () =>
     {
         const vec2 = new Vec2(3, 6);
         const result = vec2.toString();
@@ -92,7 +92,7 @@ describe("Vec2 - tests", () =>
         expect(result).toEqual(match);
     });
 
-    test('Vec2 from Array [3, 6] to {x: 3, y: 6}:Vec2', () =>
+    test('Vec2 from Array', () =>
     {
         const fromArrayValue = [3, 6];
 
@@ -104,7 +104,7 @@ describe("Vec2 - tests", () =>
     });
 
     // Basic operations
-    test('Sum two vec2 [3, 6] + [4, 7] = [7, 13]', () =>
+    test('Vec2 add', () =>
     {
         const vec_a = new Vec2(3, 6);
         const vec_b = new Vec2(4, 7);
@@ -114,7 +114,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Multiply two vec2 [3, 6] * [4, 7] = [12, 42]', () =>
+    test('Vec2 Multiply', () =>
     {
         const vec_a = new Vec2(3, 6);
         const vec_b = new Vec2(4, 7);
@@ -124,7 +124,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Multiply by float [3, 6] * x:4, y:7 = [12, 42]', () =>
+    test('Vec2 Multiply by float [3, 6] * x:4, y:7 = [12, 42]', () =>
     {
         const vec_a = new Vec2(3, 6);
 
@@ -133,7 +133,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Subtrac two vec2 [3, 6] - [4, 7] = [-1, -1] and [6, 8] - [2, 6] = [4, 2]', () =>
+    test('Vec2 Subtract', () =>
     {
         const vec_a = new Vec2(3, 6);
         const vec_b = new Vec2(4, 7);
@@ -151,7 +151,7 @@ describe("Vec2 - tests", () =>
 
     });
 
-    test('Divide two vec2 [20, 30] / [4, 2] = [5, 15]', () =>
+    test('Vec2 Divide', () =>
     {
         const vec_a = new Vec2(20, 64);
         const vec_b = new Vec2(10, 4);
@@ -162,7 +162,7 @@ describe("Vec2 - tests", () =>
     });
 
     // Scalar
-    test('Scale vec2 [3, 6] * 4 = [12, 24]', () =>
+    test('Vec2 scale', () =>
     {
         const vec = new Vec2(3, 6);
         const scale = 4;
@@ -172,7 +172,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('add scalar [3, 6] + 4 = [7, 10]', () =>
+    test('Vec2 AddScalar', () =>
     {
         const vec2 = new Vec2(3, 6);
         const addScalar = 4;
@@ -182,7 +182,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Scale and Add  [3, 6] + ([4, 7] * 4) = [19, 34]', () =>
+    test('Vec2 Scale and Add', () =>
     {
         const vec_a = new Vec2(3, 6);
         const vec_b = new Vec2(4, 7);
@@ -204,7 +204,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Divide scalar [20, 16] / 4 = [5, 4]', () =>
+    test('Vec2 Divide Scalar', () =>
     {
         const vec = new Vec2(20, 16);
         const scalar = 4;
@@ -214,7 +214,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Normalize vec2 [132, 250] = [0.4669123116297254, 0.8843036205108435]', () =>
+    test('Vec2 Normalize', () =>
     {
         const vec = new Vec2(132, 250);
 
@@ -231,18 +231,17 @@ describe("Vec2 - tests", () =>
         expect(result2).toMatchObject(match2);
     });
 
-    test('Dot vec2 [125, 240] . [125, 240] = 8305', () =>
+    test('Vec2 Dot', () =>
     {
         const vec_a = new Vec2(125, 240);
         const vec_b = new Vec2(5, 32);
 
         const result = Vec2Dot(vec_a, vec_b);
-        // Result of A/||A||
         const match: number = 8305;
         expect(result).toEqual(match);
     });
 
-    test('Cross vec2 [125, 240] * [125, 240] = []', () =>
+    test('Vec2 Cross', () =>
     {
         const vec_a = new Vec2(125, 240);
         const vec_b = new Vec2(5, 32);
