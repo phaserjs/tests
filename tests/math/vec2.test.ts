@@ -1,60 +1,65 @@
 import
 {
-    Vec2Add,
-    Vec2,
-    Vec2Multiply,
-    Vec2Subtract,
-    Vec2AddScalar,
-    Vec2Scale,
-    Vec2ScaleAndAdd,
-    Vec2SubtractScalar,
-    Vec2DivideScalar,
-    Vec2Divide,
-    Vec2Normalize,
-    Vec2Dot,
-    Vec2Clone,
-    Vec2Abs,
-    Vec2Ceil,
-    Vec2Floor,
-    Vec2Fract,
-    Vec2Negate,
-    Vec2Inverse,
-    Vec2One,
-    Vec2Equals,
-    Vec2Zero,
-    Vec2Round,
-    Vec2CopyFrom,
-    Vec2Cross,
-    Vec2Random,
-    Vec2Center,
-    GetVec2DistanceSquared,
-    GetVec2Distance,
-    GetVec2DistancePower,
-    Vec2Transform,
-    Vec2MultiplyByFloats,
-    GetVec2ManhattanLength,
-    GetVec2ManhattanDistance,
-    GetVec2Length,
-    Vec2Rotate,
-    Vec2Min,
-    Vec2Max,
-    Vec2TransformMat2d,
-    Vec2TransformMat4,
-    Vec2SetLength,
-    GetVec2LengthSquared,
-    Vec2RoundToZero,
-    Vec2PerpDot,
+    GetChebyshevDistance,
+    GetDistanceFromSegment,
     GetVec2Angle,
     GetVec2AngleY,
-    GetChebyshevDistance,
-    Vec2Lerp,
-    Vec2FromGridIndex,
-    GetDistanceFromSegment,
+    GetVec2Distance,
+    GetVec2DistancePower,
+    GetVec2DistanceSquared,
+    GetVec2Length,
+    GetVec2LengthSquared,
+    GetVec2ManhattanDistance,
+    GetVec2ManhattanLength,
+    Vec2,
+    Vec2Abs,
+    Vec2Add,
+    Vec2AddScalar,
     Vec2Bezier,
+    Vec2Callback,
+    Vec2CatmullRom,
+    Vec2Ceil,
+    Vec2Center,
     Vec2Clamp,
+    Vec2ClampScalar,
+    Vec2Clone,
+    Vec2CopyFrom,
+    Vec2Cross,
+    Vec2Divide,
+    Vec2DivideScalar,
+    Vec2Dot,
+    Vec2Equals,
+    Vec2Floor,
+    Vec2Fract,
+    Vec2FromGridIndex,
+    Vec2FuzzyEquals,
+    Vec2Hermite,
+    Vec2Inverse,
+    Vec2Lerp,
     Vec2Limit,
-    Vec2ClampScalar
+    Vec2Max,
+    Vec2Min,
+    Vec2Multiply,
+    Vec2MultiplyByFloats,
+    Vec2Negate,
+    Vec2Normalize,
+    Vec2One,
+    Vec2PerpDot,
+    Vec2Random,
+    Vec2Rotate,
+    Vec2Round,
+    Vec2RoundToZero,
+    Vec2Scale,
+    Vec2ScaleAndAdd,
+    Vec2SetLength,
+    Vec2Subtract,
+    Vec2SubtractScalar,
+    Vec2Transform,
+    Vec2TransformMat2d,
+    Vec2TransformMat4,
+    Vec2Zero
 } from '../../../phaser-genesis/src/math/vec2';
+
 import { Matrix2D } from '../../../phaser-genesis/src/math/mat2d';
 import { Matrix4 } from '../../../phaser-genesis/src/math/mat4';
 
@@ -62,10 +67,14 @@ describe("Vec2 - tests", () =>
 {
     test('New Vec2 {x: 3, y: 6}', () =>
     {
-        const vec2 = new Vec2(3, 6);
-        expect(vec2).toMatchObject({ x: 3, y: 6 });
+        const vec = new Vec2(3, 6);
+        expect(vec).toMatchObject({ x: 3, y: 6 });
+        const vec2 = new Vec2();
+        expect(vec2).toMatchObject({x: 0, y: 0});
+        const vec3 = new Vec2(4, 5);
+        vec3.set();
+        expect(vec3).toMatchObject({x: 0, y: 0});
     });
-
 
     test('New Vec2 to array {x: 3, y: 6} = [3, 6]', () =>
     {
@@ -213,6 +222,13 @@ describe("Vec2 - tests", () =>
         // Result of A/||A||
         const match = new Vec2(0.4669123116297254, 0.8843036205108435);
         expect(result).toMatchObject(match);
+
+        const vec2 = new Vec2(0, 0);
+
+        const result2 = Vec2Normalize(vec2);
+        // Result of A/||A||
+        const match2 = new Vec2(0, 0);
+        expect(result2).toMatchObject(match2);
     });
 
     test('Dot vec2 [125, 240] . [125, 240] = 8305', () =>
@@ -342,6 +358,11 @@ describe("Vec2 - tests", () =>
         mock(Vec2Random(vec_a, 5));
 
         expect(mock).toBeCalledWith(expect.any(Vec2));
+
+        const vec_b = new Vec2();
+        mock(Vec2Random(vec_b));
+
+        expect(mock).toBeCalledWith(expect.any(Vec2));
     });
 
     // Symbols
@@ -451,7 +472,13 @@ describe("Vec2 - tests", () =>
 
         const match: number = 301.66206257996714;
 
-        expect(result).toEqual(match)
+        expect(result).toEqual(match);
+
+        const result2 = GetVec2DistancePower(vec_a, vec_b);
+        const match2: number = 50;
+
+        expect(result2).toEqual(match2);
+
     });
 
     test('Vec2 Distance [10, 30] and [40, 70] = 50', () =>
@@ -478,17 +505,6 @@ describe("Vec2 - tests", () =>
 
         expect(result).toEqual(match)
     });
-
-    // TODO: Test distance power
-    // test('Vec2 Distance power', () => {
-    //     const vec_a = new Vec2(20, 30);
-    //     const vec_b = new Vec2(12, 24);
-
-    //     const result = GetVec2DistancePower(vec_a, vec_b, 3);
-
-    //     const match: number = 76;
-    //     expect(result).toBeCloseTo(match)
-    // });
 
     test('Vec2 Manhattan Length', () =>
     {
@@ -556,13 +572,13 @@ describe("Vec2 - tests", () =>
         const vec_a = new Vec2(10, 30);
         const matrix2dX = new Matrix2D(1, 0, 0, 1, 20); // Translate X
         const matrix2dY = new Matrix2D(1, 0, 0, 1, 0, 50); // Translate Y
-        
+
         const resultX = Vec2TransformMat2d(vec_a, matrix2dX);
         const resultY = Vec2TransformMat2d(vec_a, matrix2dY);
 
         const matchX = new Vec2(30, 30);
         const matchY = new Vec2(10, 80);
-        
+
         expect(resultX).toMatchObject(matchX);
         expect(resultY).toMatchObject(matchY);
     });
@@ -571,15 +587,15 @@ describe("Vec2 - tests", () =>
     {
         const vec_a = new Vec2(10, 30);
 
-        const matrix4X= new Matrix4().set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0); // Translate X
-        const matrix4Y= new Matrix4().set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0); // Translate X
+        const matrix4X = new Matrix4().set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0); // Translate X
+        const matrix4Y = new Matrix4().set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0); // Translate X
 
         const resultX = Vec2TransformMat4(vec_a, matrix4X);
         const resultY = Vec2TransformMat4(vec_a, matrix4Y);
 
         const matchX = new Vec2(20, 30);
         const matchY = new Vec2(10, 50);
-        
+
         expect(resultX).toMatchObject(matchX);
         expect(resultY).toMatchObject(matchY);
     });
@@ -614,7 +630,7 @@ describe("Vec2 - tests", () =>
         expect(result).toEqual(match);
     });
 
-    
+
     test('Vec2 Get Chebyshev Distance', () =>
     {
         const vec_a = new Vec2(10, 16);
@@ -644,8 +660,12 @@ describe("Vec2 - tests", () =>
     {
         const result = Vec2FromGridIndex(16, 6, 4);
         const match = new Vec2(4, 2);
-
         expect(result).toMatchObject(match);
+
+        // Test 2 if index < width - 
+        const result2 = Vec2FromGridIndex(5, 6, 4);
+        const match2 = new Vec2(5, 0);
+        expect(result2).toMatchObject(match2);
     });
 
     test('Vec2 get distance from segment', () =>
@@ -666,27 +686,26 @@ describe("Vec2 - tests", () =>
         const result2 = GetDistanceFromSegment(vec_2_p, vec_2_a, vec_2_b);
         const match2: number = 10;
         expect(result2).toEqual(match2);
-        
+
     });
 
-    // TODO: Test Bezier
-    // test('Vec2 Bezier', () =>
-    // {
+    test('Vec2 Fuzzy Equals', () =>
+    {
 
-    //     const vec_a = new Vec2(50, 260);
-    //     const vec_b = new Vec2(610, 25);
-    //     const vec_c = new Vec2(320, 370);
-    //     const vec_d = new Vec2(735, 550);
-    //     const t:number = 2;
+        const vec_a = new Vec2(3.5, 2.9);
+        const vec_b = new Vec2(3, 2);
+        const epsilon = 1;
+        const epsilon2 = .5;
 
+        const result = Vec2FuzzyEquals(vec_a, vec_b, epsilon);
+        const result2 = Vec2FuzzyEquals(vec_a, vec_b, epsilon2);
+        const result3 = Vec2FuzzyEquals(vec_a, vec_b);
 
-    //     const result = Vec2Bezier(vec_a, vec_b, vec_c, vec_d, t);
-    //     const match = new Vec2(5650, -150);
+        expect(result).toBeTruthy();
+        expect(result2).toBeFalsy();
+        expect(result3).toBeFalsy();
+    });
 
-    //     expect(result).toMatchObject(match);
-    // });
-
-    
     test('Vec2 Clamp', () =>
     {
 
@@ -734,14 +753,159 @@ describe("Vec2 - tests", () =>
         expect(result_in_min_max).toMatchObject(match_in_min_max);
     });
 
+    test('Vec2 Catmull Rom', () =>
+    {
+        const vec1 = new Vec2(10, 10);
+        const vec2 = new Vec2(20, 20);
+        const vec3 = new Vec2(30, 10);
+        const vec4 = new Vec2(40, 30);
+
+        const result_points = [
+            new Vec2(20, 20),
+            new Vec2(21, 19.675),
+            new Vec2(22, 18.8),
+            new Vec2(23, 17.525),
+            new Vec2(24, 16),
+            new Vec2(25, 14.375),
+            new Vec2(26, 12.8),
+            new Vec2(27, 11.424999999999999),
+            new Vec2(28, 10.399999999999997),
+            new Vec2(29, 9.875)
+        ];
+
+        for (let i = 0; i < 10; i++)
+        {
+            const result = Vec2CatmullRom(vec1, vec2, vec3, vec4, i / 10);
+            expect(result).toEqual(result_points[i]);
+        }
+    });
+
     test('Vec2 Limit', () =>
     {
         const vec = new Vec2(20, 10);
         const result = Vec2Limit(vec, 8);
 
         const match = new Vec2(7.155417527999327, 3.5777087639996634);
-    
+
         expect(result).toMatchObject(match);
     });
+
+    test('Vec2 Bezier', () =>
+    {
+        const vec1 = new Vec2(50, 260);
+        const vec2 = new Vec2(610, 25);
+        const vec3 = new Vec2(320, 370);
+        const vec4 = new Vec2(735, 550);
+
+        const result_points = [
+            new Vec2(50, 260),
+            new Vec2(194.054993, 206.154999),
+            new Vec2(296.440002, 182.639999),
+            new Vec2(366.485016, 184.985001),
+            new Vec2(413.519989, 208.720001),
+            new Vec2(446.875, 249.375),
+            new Vec2(475.880005, 302.480011),
+            new Vec2(509.86499, 363.565002),
+            new Vec2(558.160034, 428.160034),
+            new Vec2(630.094971, 491.794983)
+        ];
+
+        for (let i = 0; i < 10; i++)
+        {
+            const result = Vec2Bezier(vec1, vec2, vec3, vec4, i / 10);
+            expect(result.x).toBeCloseTo(result_points[i].x);
+            expect(result.y).toBeCloseTo(result_points[i].y);
+        }
+    });
+
+    // TODO Hermite Curve
+    test('Vec2 Hermite', () =>
+    {
+        const vec1 = new Vec2(50, 260);
+        const vec2 = new Vec2(610, 25);
+        const vec3 = new Vec2(320, 370);
+        const vec4 = new Vec2(735, 550);
+
+        const result_points = [
+            new Vec2(50, 260),
+            new Vec2(115.71000000000001, 266.815),
+            new Vec2(189.07999999999998, 281.52),
+            new Vec2(267.47, 303.005),
+            new Vec2(348.24000000000007, 330.16),
+            new Vec2(428.75, 361.875),
+            new Vec2(506.36, 397.04),
+            new Vec2(578.43, 434.54499999999996),
+            new Vec2(642.32, 473.28000000000003),
+            new Vec2(695.3899999999999, 512.135),
+        ];
+
+        for (let i = 0; i < 10; i++)
+        {
+            const result = Vec2Hermite(vec1, vec2, vec3, vec4, i / 10);
+            expect(result).toEqual(result_points[i])
+        }
+    });
+
+    test('Vec2 Callback', () =>
+    {
+        const handler = jest.fn();
+        
+        const match = new Vec2(25, 40);
+        const callback = new Vec2Callback((vector2) =>
+        {
+            handler();
+            const result = Vec2Clone(vector2);
+            expect(result).toEqual(match);
+        });
+        // No emit event
+        callback.set(match.x, match.y);
+
+        // To String
+        expect(callback.toString()).toEqual(match.toString());
+        // To Array
+        expect(callback.toArray()).toEqual(match.toArray());
+        
+        // set from array
+        const callback_from_array = new Vec2Callback((vector2) =>
+        {
+            handler();
+            const result = Vec2Clone(vector2);
+            expect(result).toEqual(match);
+        }, 10, 20);
+        callback_from_array.fromArray(match.toArray());
+
+        // Set x and y
+        const set_x = new Vec2Callback((vector2) =>
+        {
+            handler();
+            const result = Vec2Clone(vector2);
+            expect(result.x).toEqual(match.x);
+        }, 10, 20);
+        // branch x == old x
+        set_x.x = 10;
+        set_x.x = match.x;
+
+        const set_y = new Vec2Callback((vector2) =>
+        {
+            handler();
+            const result = Vec2Clone(vector2);
+            expect(result.y).toEqual(match.y);
+        }, 10, 20);
+        // branch y == old y
+        set_y.y = 20;
+        set_y.y = match.y;
+
+        // Whe have emitted 4 (set, set x, set y, fromArray) events and used  handlers because we should onlyreceive 4 calls
+        expect(handler).toBeCalledTimes(4);
+
+        // Destroy: 
+        const handler_destroy = jest.fn();
+        const callback_destroy = new Vec2Callback(handler_destroy, 10, 20);
+        callback_destroy.destroy();
+        callback_destroy.set();
+        // We don't should receive calls
+        expect(handler_destroy).not.toBeCalled();
+    });
+
 
 });
