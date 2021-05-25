@@ -309,7 +309,7 @@ describe("Vec2 - tests", () =>
         expect(result_b).toMatchObject(match_b);
     });
 
-    test('Vec2 round [5.6, 10.2] = [6, 10]', () =>
+    test('Vec2 Round', () =>
     {
         const vec2 = new Vec2(5.6, 10.2);
 
@@ -319,7 +319,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Vec2 ceil [5.6, 10.2] = [6, 11]', () =>
+    test('Vec2 ceil', () =>
     {
         const vec2 = new Vec2(5.6, 10.2);
 
@@ -329,7 +329,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Vec2 floor [5.6, 10.2] = [5, 10]', () =>
+    test('Vec2 Floor', () =>
     {
         const vec2 = new Vec2(5.6, 10.2);
 
@@ -339,7 +339,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Vec2 frac [5.6, 10.2] = [5, 10]', () =>
+    test('Vec2 Fract', () =>
     {
         const vec2 = new Vec2(5.6, 10.2);
 
@@ -365,7 +365,7 @@ describe("Vec2 - tests", () =>
     });
 
     // Symbols
-    test('Vec2 abs [-3, -5] = [3, 5]', () =>
+    test('Vec2 abs', () =>
     {
         const vec2 = new Vec2(-3, -5);
 
@@ -375,7 +375,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Vec2 negate [-5, 10] = [5, -10]', () =>
+    test('Vec2 negate', () =>
     {
         const vec2 = new Vec2(-5, 10);
 
@@ -385,7 +385,7 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    test('Vec2 inverse [1/x, 1/y] -> [5, 20] = [0.2, 0.05]', () =>
+    test('Vec2 inverse', () =>
     {
         const vec2 = new Vec2(5, 20);
 
@@ -396,7 +396,7 @@ describe("Vec2 - tests", () =>
     });
 
 
-    test('Vec2 Zero [0, 0]', () =>
+    test('Vec2 Zero', () =>
     {
         const result = Vec2Zero();
         const match = new Vec2(0, 0);
@@ -405,7 +405,7 @@ describe("Vec2 - tests", () =>
     });
 
 
-    test('Vec2 one [1, 1]', () =>
+    test('Vec2 one', () =>
     {
         const result = Vec2One();
         const match = new Vec2(1, 1);
@@ -450,7 +450,20 @@ describe("Vec2 - tests", () =>
         expect(result).toMatchObject(match)
     });
 
-    test('Vec2 Get distance squared  [10, 30] and [40, 70] = 2500', () =>
+    test('Vec2 Distance', () =>
+    {
+
+        const vec_a = new Vec2(10, 30);
+        const vec_b = new Vec2(40, 70);
+
+        const result = GetVec2Distance(vec_a, vec_b);
+
+        const match: number = 50;
+
+        expect(result).toEqual(match)
+    });
+
+    test('Vec2 Get distance squared', () =>
     {
         const vec_a = new Vec2(10, 30);
         const vec_b = new Vec2(40, 70);
@@ -480,22 +493,8 @@ describe("Vec2 - tests", () =>
 
     });
 
-    test('Vec2 Distance [10, 30] and [40, 70] = 50', () =>
-    {
-
-        const vec_a = new Vec2(10, 30);
-        const vec_b = new Vec2(40, 70);
-
-        const result = GetVec2Distance(vec_a, vec_b);
-
-        const match: number = 50;
-
-        expect(result).toEqual(match)
-    });
-
     test('Vec2 transform', () =>
     {
-
         const vec_a = new Vec2(10, 30);
 
         const result = Vec2Transform(vec_a, 3, 6, 20, 3, 3);
@@ -582,12 +581,12 @@ describe("Vec2 - tests", () =>
         expect(resultY).toMatchObject(matchY);
     });
 
-    test('Vec2 Transform Math4', () =>
+    test('Vec2 Transform Matrix4', () =>
     {
         const vec_a = new Vec2(10, 30);
 
         const matrix4X = new Matrix4().set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0); // Translate X
-        const matrix4Y = new Matrix4().set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0); // Translate X
+        const matrix4Y = new Matrix4().set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0); // Translate Y
 
         const resultX = Vec2TransformMat4(vec_a, matrix4X);
         const resultY = Vec2TransformMat4(vec_a, matrix4Y);
