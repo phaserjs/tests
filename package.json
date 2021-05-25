@@ -7,7 +7,7 @@
     "test": "jest --maxWorkers=50% --config=jest.config.js",
     "test:coverage": "jest --maxWorkers=50% --coverage --config=./jest.coverage.config.js --coverageDirectory=../tests/coverage -- ../tests/tests/",
     "server:coverage": "node server-coverage-config.ts",
-    "server": "node jest-puppeteer-config/startServer.ts",
+    "server:e2e": "node jest-puppeteer-config/startServer.ts",
     "test:e2e": "cross-env DEBUG=test JEST_PUPPETEER_CONFIG=jest-puppeteer-config/puppeteer.config.ts jest --runInBand --detectOpenHandles --config=jest-puppeteer-config/jest.config.js",
     "test:math": "jest --maxWorkers=50% --config=jest.config.js -- tests/math",
     "test:utils": "jest --maxWorkers=50% --config=jest.config.js -- tests/utils"
