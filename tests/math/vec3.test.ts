@@ -10,6 +10,9 @@ import {
     Vec3Abs,
     Vec3Add,
     Vec3AddScalar,
+    Vec3Bezier,
+    Vec3Callback,
+    Vec3CatmullRom,
     Vec3Ceil,
     Vec3Center,
     Vec3Clamp,
@@ -24,7 +27,10 @@ import {
     Vec3Equals,
     Vec3Floor,
     Vec3Fract,
+    Vec3FuzzyEquals,
+    Vec3Hermite,
     Vec3Inverse,
+    Vec3IsNonUniform,
     Vec3Lerp,
     Vec3Max,
     Vec3Min,
@@ -46,7 +52,6 @@ import {
 } from "../../../phaser-genesis/src/math/vec3";
 
 import { Matrix4 } from "../../../phaser-genesis/src/math/mat4";
-import { Vec2FuzzyEquals } from "../../../phaser-genesis/src/math/vec2";
 
 describe("Vec3 - tests", () =>
 {
@@ -524,9 +529,9 @@ describe("Vec3 - tests", () =>
         const epsilon = 1;
         const epsilon2 = .5;
 
-        const result = Vec2FuzzyEquals(vec_a, vec_b, epsilon);
-        const result2 = Vec2FuzzyEquals(vec_a, vec_b, epsilon2);
-        const result3 = Vec2FuzzyEquals(vec_a, vec_b);
+        const result = Vec3FuzzyEquals(vec_a, vec_b, epsilon);
+        const result2 = Vec3FuzzyEquals(vec_a, vec_b, epsilon2);
+        const result3 = Vec3FuzzyEquals(vec_a, vec_b);
 
         expect(result).toBeTruthy();
         expect(result2).toBeFalsy();
@@ -630,6 +635,162 @@ describe("Vec3 - tests", () =>
         const match: number = 160;
 
         expect(result).toEqual(match)
+    });
+
+
+    test('Vec3 Bezier', () =>
+    {
+        const vec1 = new Vec3(50, 260, 260);
+        const vec2 = new Vec3(610, 25, 25);
+        const vec3 = new Vec3(320, 370);
+        const vec4 = new Vec3(735, 550);
+
+        const result_points = [
+            new Vec3(50, 260, 260),
+            new Vec3(194.054993, 206.154999, 195.615),
+            new Vec3(296.440002, 182.639999, 142.72000000000003),
+            new Vec3(366.485016, 184.985001, 100.20499999999997),
+            new Vec3(413.519989, 208.720001, 66.96),
+            new Vec3(446.875, 249.375, 41.875),
+            new Vec3(475.880005, 302.480011, 23.840000000000003),
+            new Vec3(509.86499, 363.565002, 11.745000000000003),
+            new Vec3(558.160034, 428.160034, 4.479999999999998),
+            new Vec3(630.094971, 491.794983, 0.9349999999999996)
+        ];
+
+        for (let i = 0; i < 10; i++)
+        {
+            const result = Vec3Bezier(vec1, vec2, vec3, vec4, i / 10);
+            expect(result.x).toBeCloseTo(result_points[i].x);
+            expect(result.y).toBeCloseTo(result_points[i].y);
+            expect(result.z).toBeCloseTo(result_points[i].z);
+        }
+    });
+
+
+    test('Vec2 Hermite', () =>
+    {
+        const vec1 = new Vec3(50, 260, 20);
+        const vec2 = new Vec3(610, 25, 59);
+        const vec3 = new Vec3(320, 370, 30);
+        const vec4 = new Vec3(735, 550, 56);
+
+        const result_points = [
+            new Vec3(50, 260, 20),
+            new Vec3(115.71000000000001, 266.815, 25.517),
+            new Vec3(189.07999999999998, 281.52, 30.336000000000002),
+            new Vec3(267.47, 303.005, 34.559),
+            new Vec3(348.24000000000007, 330.16, 38.288),
+            new Vec3(428.75, 361.875, 41.625),
+            new Vec3(506.36, 397.04, 44.672),
+            new Vec3(578.43, 434.54499999999996, 47.531000000000006),
+            new Vec3(642.32, 473.28000000000003, 50.304),
+            new Vec3(695.3899999999999, 512.135, 53.092999999999996),
+        ];
+
+        for (let i = 0; i < 10; i++)
+        {
+            const result = Vec3Hermite(vec1, vec2, vec3, vec4, i / 10);
+            expect(result).toEqual(result_points[i])
+        }
+    });
+
+    test('Vec3 IsNonUniform', () =>
+    {
+
+        const vec = new Vec3(10, 10, 30);
+
+        const result = Vec3IsNonUniform(vec);
+
+        expect(result).toBeTruthy();
+    });
+
+    test('Vec2 Catmull Rom', () =>
+    {
+        const vec1 = new Vec3(10, 10, 10);
+        const vec2 = new Vec3(20, 20, 10);
+        const vec3 = new Vec3(30, 10, 23);
+        const vec4 = new Vec3(40, 30, 50);
+
+        const result_points = [
+            new Vec3(20, 20, 10),
+            new Vec3(21, 19.675, 10.7105),
+            new Vec3(22, 18.8, 11.544),
+            new Vec3(23, 17.525, 12.503499999999999),
+            new Vec3(24, 16, 13.592),
+            new Vec3(25, 14.375, 14.8125),
+            new Vec3(26, 12.8, 16.168),
+            new Vec3(27, 11.424999999999999, 17.6615),
+            new Vec3(28, 10.399999999999997, 19.296),
+            new Vec3(29, 9.875, 21.0745)
+        ];
+
+        for (let i = 0; i < 10; i++)
+        {
+            const result = Vec3CatmullRom(vec1, vec2, vec3, vec4, i / 10);
+            expect(result).toEqual(result_points[i]);
+        }
+    });
+
+    test('Vec2 Callback', () =>
+    {
+        const handler = jest.fn();
+        
+        const match = new Vec3(25, 40);
+        const callback = new Vec3Callback((vector) =>
+        {
+            handler();
+            const result = Vec3Clone(vector);
+            expect(result).toEqual(match);
+        });
+        // No emit event
+        callback.set(match.x, match.y);
+
+        // To String
+        expect(callback.toString()).toEqual(match.toString());
+        // To Array
+        expect(callback.toArray()).toEqual(match.toArray());
+        
+        // set from array
+        const callback_from_array = new Vec3Callback((vector) =>
+        {
+            handler();
+            const result = Vec3Clone(vector);
+            expect(result).toEqual(match);
+        }, 10, 20);
+        callback_from_array.fromArray(match.toArray());
+
+        // Set x and y
+        const set_x = new Vec3Callback((vector) =>
+        {
+            handler();
+            const result = Vec3Clone(vector);
+            expect(result.x).toEqual(match.x);
+        }, 10, 20);
+        // branch x == old x
+        set_x.x = 10;
+        set_x.x = match.x;
+
+        const set_y = new Vec3Callback((vector) =>
+        {
+            handler();
+            const result = Vec3Clone(vector);
+            expect(result.y).toEqual(match.y);
+        }, 10, 20);
+        // branch y == old y
+        set_y.y = 20;
+        set_y.y = match.y;
+
+        // Whe have emitted 4 (set, set x, set y, fromArray) events and used  handlers because we should onlyreceive 4 calls
+        expect(handler).toBeCalledTimes(4);
+
+        // Destroy: 
+        const handler_destroy = jest.fn();
+        const callback_destroy = new Vec3Callback(handler_destroy, 10, 20);
+        callback_destroy.destroy();
+        callback_destroy.set();
+        // We don't should receive calls
+        expect(handler_destroy).not.toBeCalled();
     });
 
 });

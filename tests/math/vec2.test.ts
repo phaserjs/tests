@@ -816,7 +816,6 @@ describe("Vec2 - tests", () =>
         }
     });
 
-    // TODO Hermite Curve
     test('Vec2 Hermite', () =>
     {
         const vec1 = new Vec2(50, 260);
