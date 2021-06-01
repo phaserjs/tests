@@ -40,6 +40,7 @@ import {
     Vec3Normalize,
     Vec3One,
     Vec3Random,
+    Vec3RotateX,
     Vec3Round,
     Vec3RoundToZero,
     Vec3Scale,
@@ -70,21 +71,21 @@ describe("Vec3 - tests", () =>
 
     test('Vec3 to array', () =>
     {
-        const vec2 = new Vec3(3, 6, 30);
-        const result = vec2.toArray();
+        const vec = new Vec3(3, 6, 30);
+        const result = vec.toArray();
         const match = [3, 6, 30];
         expect(result).toEqual(match);
     });
 
     test('Vec3 to string', () =>
     {
-        const vec2 = new Vec3(3, 6, 30);
-        const result = vec2.toString();
+        const vec = new Vec3(3, 6, 30);
+        const result = vec.toString();
         const match = "{ x=3, y=6, z=30 }";
         expect(result).toEqual(match);
     });
 
-    test('Vec2 from Array', () =>
+    test('Vec3 from Array', () =>
     {
         const fromArrayValue = [3, 6, 30];
 
@@ -182,10 +183,10 @@ describe("Vec3 - tests", () =>
 
     test('Vec3 AddScalar', () =>
     {
-        const vec2 = new Vec3(3, 6, 9);
+        const vec = new Vec3(3, 6, 9);
         const addScalar = 4;
 
-        const result = Vec3AddScalar(vec2, addScalar);
+        const result = Vec3AddScalar(vec, addScalar);
         const match = new Vec3(7, 10, 13);
         expect(result).toMatchObject(match);
     });
@@ -262,8 +263,8 @@ describe("Vec3 - tests", () =>
 
     test('Vec3 Set Length', () =>
     {
-        const vec2 = new Vec3(132, 250, 20);
-        const result = Vec3SetLength(vec2, 5);
+        const vec = new Vec3(132, 250, 20);
+        const result = Vec3SetLength(vec, 5);
 
         const match = new Vec3(2.328741441499999, 4.410495154356059, 0.3528396123484847);
         expect(result).toEqual(match)
@@ -353,9 +354,9 @@ describe("Vec3 - tests", () =>
 
     test('Vec3 Frac', () =>
     {
-        const vec2 = new Vec3(5.6, 10.2, 3.3);
+        const vec = new Vec3(5.6, 10.2, 3.3);
 
-        const result = Vec3Fract(vec2);
+        const result = Vec3Fract(vec);
         const match = new Vec3(0.6, 0.2, 0.3);
 
         expect(result.x).toBeCloseTo(match.x);
@@ -380,9 +381,9 @@ describe("Vec3 - tests", () =>
 
     test('Vec3 abs', () =>
     {
-        const vec2 = new Vec3(-3, -5, 8);
+        const vec = new Vec3(-3, -5, 8);
 
-        const result = Vec3Abs(vec2);
+        const result = Vec3Abs(vec);
         const match = new Vec3(3, 5, 8);
 
         expect(result).toMatchObject(match);
@@ -390,9 +391,9 @@ describe("Vec3 - tests", () =>
 
     test('Vec3 negate', () =>
     {
-        const vec2 = new Vec3(-5, 10, -67);
+        const vec = new Vec3(-5, 10, -67);
 
-        const result = Vec3Negate(vec2);
+        const result = Vec3Negate(vec);
         const match = new Vec3(5, -10, 67);
 
         expect(result).toMatchObject(match);
@@ -400,9 +401,9 @@ describe("Vec3 - tests", () =>
 
     test('Vec3 inverse', () =>
     {
-        const vec2 = new Vec3(5, 20, 40);
+        const vec = new Vec3(5, 20, 40);
 
-        const result = Vec3Inverse(vec2);
+        const result = Vec3Inverse(vec);
         const match = new Vec3(0.2, 0.05, 0.025);
 
         expect(result).toMatchObject(match);
@@ -559,7 +560,7 @@ describe("Vec3 - tests", () =>
         expect(result_in_min_max).toMatchObject(match_in_min_max);
     });
 
-    test('Vec2 ClampScalar', () =>
+    test('Vec3 ClampScalar', () =>
     {
         const vec_min = new Vec3(20, 10, 25);
 
@@ -582,7 +583,7 @@ describe("Vec3 - tests", () =>
         expect(result_in_min_max).toMatchObject(match_in_min_max);
     });
 
-    test('Vec2 ClampLength', () =>
+    test('Vec3 ClampLength', () =>
     {
         const vec = new Vec3(10, 30, 20);
 
@@ -615,9 +616,9 @@ describe("Vec3 - tests", () =>
     test('Vec3 Manhattan Length', () =>
     {
 
-        const vec2 = new Vec3(10, 30, 20);
+        const vec = new Vec3(10, 30, 20);
 
-        const result = GetVec3ManhattanLength(vec2);
+        const result = GetVec3ManhattanLength(vec);
 
         const match: number = 60;
 
@@ -668,7 +669,7 @@ describe("Vec3 - tests", () =>
     });
 
 
-    test('Vec2 Hermite', () =>
+    test('Vec3 Hermite', () =>
     {
         const vec1 = new Vec3(50, 260, 20);
         const vec2 = new Vec3(610, 25, 59);
@@ -705,7 +706,7 @@ describe("Vec3 - tests", () =>
         expect(result).toBeTruthy();
     });
 
-    test('Vec2 Catmull Rom', () =>
+    test('Vec3 Catmull Rom', () =>
     {
         const vec1 = new Vec3(10, 10, 10);
         const vec2 = new Vec3(20, 20, 10);
@@ -732,7 +733,7 @@ describe("Vec3 - tests", () =>
         }
     });
 
-    test('Vec2 Callback', () =>
+    test('Vec3 Callback', () =>
     {
         const handler = jest.fn();
         
@@ -793,4 +794,5 @@ describe("Vec3 - tests", () =>
         expect(handler_destroy).not.toBeCalled();
     });
 
+ 
 });
