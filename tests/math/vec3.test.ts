@@ -1,55 +1,58 @@
-import {
-    GetVec3Angle,
-    GetVec3Distance,
-    GetVec3DistanceSquared,
-    GetVec3Length,
-    GetVec3LengthSquared,
-    GetVec3ManhattanDistance,
-    GetVec3ManhattanLength,
-    Vec3,
-    Vec3Abs,
-    Vec3Add,
-    Vec3AddScalar,
-    Vec3Bezier,
-    Vec3Callback,
-    Vec3CatmullRom,
-    Vec3Ceil,
-    Vec3Center,
-    Vec3Clamp,
-    Vec3ClampLength,
-    Vec3ClampScalar,
-    Vec3Clone,
-    Vec3CopyFrom,
-    Vec3Cross,
-    Vec3Divide,
-    Vec3DivideScalar,
-    Vec3Dot,
-    Vec3Equals,
-    Vec3Floor,
-    Vec3Fract,
-    Vec3FuzzyEquals,
-    Vec3Hermite,
-    Vec3Inverse,
-    Vec3IsNonUniform,
-    Vec3Lerp,
-    Vec3Max,
-    Vec3Min,
-    Vec3Multiply,
-    Vec3MultiplyByFloats,
-    Vec3Negate,
-    Vec3Normalize,
-    Vec3One,
-    Vec3Random,
-    Vec3RotateX,
-    Vec3Round,
-    Vec3RoundToZero,
-    Vec3Scale,
-    Vec3ScaleAndAdd,
-    Vec3SetLength,
-    Vec3Subtract,
-    Vec3SubtractScalar,
-    Vec3TransformMat4,
-    Vec3Zero
+import
+    {
+        GetVec3Angle,
+        GetVec3Distance,
+        GetVec3DistanceSquared,
+        GetVec3Length,
+        GetVec3LengthSquared,
+        GetVec3ManhattanDistance,
+        GetVec3ManhattanLength,
+        Vec3,
+        Vec3Abs,
+        Vec3Add,
+        Vec3AddScalar,
+        Vec3Bezier,
+        Vec3Callback,
+        Vec3CatmullRom,
+        Vec3Ceil,
+        Vec3Center,
+        Vec3Clamp,
+        Vec3ClampLength,
+        Vec3ClampScalar,
+        Vec3Clone,
+        Vec3CopyFrom,
+        Vec3Cross,
+        Vec3Divide,
+        Vec3DivideScalar,
+        Vec3Dot,
+        Vec3Equals,
+        Vec3Floor,
+        Vec3Fract,
+        Vec3FuzzyEquals,
+        Vec3Hermite,
+        Vec3Inverse,
+        Vec3IsNonUniform,
+        Vec3Lerp,
+        Vec3Max,
+        Vec3Min,
+        Vec3Multiply,
+        Vec3MultiplyByFloats,
+        Vec3Negate,
+        Vec3Normalize,
+        Vec3One,
+        Vec3Random,
+        Vec3RotateX,
+        Vec3RotateY,
+        Vec3RotateZ,
+        Vec3Round,
+        Vec3RoundToZero,
+        Vec3Scale,
+        Vec3ScaleAndAdd,
+        Vec3SetLength,
+        Vec3Subtract,
+        Vec3SubtractScalar,
+        Vec3TransformMat4,
+        Vec3Zero
 } from "../../../phaser-genesis/src/math/vec3";
 
 import { Matrix4 } from "../../../phaser-genesis/src/math/mat4";
@@ -59,14 +62,14 @@ describe("Vec3 - tests", () =>
     test('New Vec3', () =>
     {
         const vec = new Vec3(3, 6, 8);
-        expect(vec).toMatchObject({ x: 3, y: 6, z: 8});
+        expect(vec).toMatchObject({ x: 3, y: 6, z: 8 });
 
         const vec2 = new Vec3();
-        expect(vec2).toMatchObject({x: 0, y: 0, z: 0});
+        expect(vec2).toMatchObject({ x: 0, y: 0, z: 0 });
 
         const vec3 = new Vec3(4, 5, 4);
         vec3.set();
-        expect(vec3).toMatchObject({x: 0, y: 0, z: 0});
+        expect(vec3).toMatchObject({ x: 0, y: 0, z: 0 });
     });
 
     test('Vec3 to array', () =>
@@ -170,7 +173,7 @@ describe("Vec3 - tests", () =>
         expect(result).toMatchObject(match);
     });
 
-    
+
     test('Vec3 Scale', () =>
     {
         const vec = new Vec3(3, 6, 5);
@@ -304,7 +307,7 @@ describe("Vec3 - tests", () =>
 
     test('Vec3 Round to Zero', () =>
     {
-        const vec_a = new Vec3(10.54, 30.25,  60.3);
+        const vec_a = new Vec3(10.54, 30.25, 60.3);
         const result_a = Vec3RoundToZero(vec_a);
         const match_a = new Vec3(10, 30, 60);
         expect(result_a).toMatchObject(match_a);
@@ -418,7 +421,7 @@ describe("Vec3 - tests", () =>
         expect(result).toMatchObject(match)
     });
 
-    
+
     test('Vec3 one', () =>
     {
         const result = Vec3One();
@@ -484,7 +487,7 @@ describe("Vec3 - tests", () =>
 
         const result = GetVec3DistanceSquared(vec_a, vec_b);
 
-        const match: number =  Math.pow(61.032778078668514, 2);
+        const match: number = Math.pow(61.032778078668514, 2);
 
         expect(result).toEqual(match)
     });
@@ -494,18 +497,18 @@ describe("Vec3 - tests", () =>
     {
         const vec_a = new Vec3(10, 30, 20);
         const matrix4 = new Matrix4().set(
-            1, 0, 0, 0, 
-            0, 1, 0, 0, 
-            0, 0, 1, 0, 
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
             20, 60, -15, 1);
         const resultX = Vec3TransformMat4(vec_a, matrix4);
         const matchX = new Vec3(30, 90, 5);
         expect(resultX).toEqual(matchX)
         // Scala test
         const matrix4Scale = new Matrix4().set(
-            2, 0, 0, 0, 
-            0, 0.5, 0, 0, 
-            0, 0, 3, 0, 
+            2, 0, 0, 0,
+            0, 0.5, 0, 0,
+            0, 0, 3, 0,
             0, 0, 0, 1);
         const resultscale = Vec3TransformMat4(matchX, matrix4Scale);
         const matchScale = new Vec3(60, 45, 15);
@@ -592,7 +595,7 @@ describe("Vec3 - tests", () =>
         const max = 80;
 
         const result_min = Vec3ClampLength(vec, min, max);
-        const match_min = new Vec3( 9.999999999999998, 30, 19.999999999999996);
+        const match_min = new Vec3(9.999999999999998, 30, 19.999999999999996);
         expect(result_min.x).toBeCloseTo(match_min.x);
         expect(result_min.y).toBeCloseTo(match_min.y);
         expect(result_min.z).toBeCloseTo(match_min.z);
@@ -736,7 +739,7 @@ describe("Vec3 - tests", () =>
     test('Vec3 Callback', () =>
     {
         const handler = jest.fn();
-        
+
         const match = new Vec3(25, 40);
         const callback = new Vec3Callback((vector) =>
         {
@@ -751,7 +754,7 @@ describe("Vec3 - tests", () =>
         expect(callback.toString()).toEqual(match.toString());
         // To Array
         expect(callback.toArray()).toEqual(match.toArray());
-        
+
         // set from array
         const callback_from_array = new Vec3Callback((vector) =>
         {
@@ -794,5 +797,51 @@ describe("Vec3 - tests", () =>
         expect(handler_destroy).not.toBeCalled();
     });
 
- 
+    test('Vec3 Rotations', () =>
+    {
+        const angle = 40;
+        const vec = new Vec3(10, 20, 20);
+
+        // Rotation in Z
+        const resultZ = Vec3RotateZ(vec, new Vec3(), angle);
+        const matrix4Z = new Matrix4().set(
+            Math.cos(angle), Math.sin(angle), 0, 0,
+            -Math.sin(angle), Math.cos(angle), 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        );
+        const matchZ = Vec3TransformMat4(vec, matrix4Z);
+        expect(resultZ.x).toBeCloseTo(matchZ.x);
+        expect(resultZ.y).toBeCloseTo(matchZ.y);
+        expect(resultZ.z).toBeCloseTo(matchZ.z);
+
+        // Rotation in Y
+        const resultY = Vec3RotateY(vec, new Vec3(), angle);
+        const matrix4Y = new Matrix4().set(
+            Math.cos(angle), 0, -Math.sin(angle), 0,
+            0, 1, 0, 0,
+            Math.sin(angle), 0, Math.cos(angle), 0,
+            0, 0, 0, 1
+        );
+        const matchY = Vec3TransformMat4(vec, matrix4Y);
+
+        expect(resultY.x).toBeCloseTo(matchY.x);
+        expect(resultY.y).toBeCloseTo(matchY.y);
+        expect(resultY.z).toBeCloseTo(matchY.z);
+
+        // Rotation in X
+        const resultX = Vec3RotateX(vec, new Vec3(), angle);
+        const matrix4X = new Matrix4().set(
+            1, 0, 0, 0,
+            0, Math.cos(angle), Math.sin(angle), 0,
+            0, -Math.sin(angle), Math.cos(angle), 0,
+            0, 0, 0, 1
+        );
+        const matchX = Vec3TransformMat4(vec, matrix4X);
+
+        expect(resultX.x).toBeCloseTo(matchX.x);
+        expect(resultX.y).toBeCloseTo(matchX.y);
+        expect(resultX.z).toBeCloseTo(matchX.z);
+
+    });
 });
