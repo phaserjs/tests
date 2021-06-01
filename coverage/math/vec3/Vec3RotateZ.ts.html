@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -84,18 +84,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -104,20 +104,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IVec3Like } from './IVec3Like';
 import { Vec3 } from './Vec3';
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >Vec3RotateZ </span>(a: Vec3, origin: IVec3Like, angle: number, out: Vec3 = <span class="branch-0 cbranch-no" title="branch not covered" >new Vec3())</span>: Vec3
+export function Vec3RotateZ (a: Vec3, origin: IVec3Like, angle: number, out: Vec3 = new Vec3()): Vec3
 {
-    const { x: ax, y: ay, z: az } = <span class="cstat-no" title="statement not covered" >a;</span>
-    const { x: bx, y: by, z: bz } = <span class="cstat-no" title="statement not covered" >origin;</span>
+    const { x: ax, y: ay, z: az } = a;
+    const { x: bx, y: by, z: bz } = origin;
 &nbsp;
-    const px = <span class="cstat-no" title="statement not covered" >ax - bx;</span>
-    const py = <span class="cstat-no" title="statement not covered" >ay - by;</span>
-    const pz = <span class="cstat-no" title="statement not covered" >az - bz;</span>
+    const px = ax - bx;
+    const py = ay - by;
+    const pz = az - bz;
 &nbsp;
-    const rx = <span class="cstat-no" title="statement not covered" >px * Math.cos(angle) - py * Math.sin(angle);</span>
-    const ry = <span class="cstat-no" title="statement not covered" >px * Math.sin(angle) + py * Math.cos(angle);</span>
-    const rz = <span class="cstat-no" title="statement not covered" >pz;</span>
+    const rx = px * Math.cos(angle) - py * Math.sin(angle);
+    const ry = px * Math.sin(angle) + py * Math.cos(angle);
+    const rz = pz;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return out.set(</span>
+    return out.set(
         rx + bx,
         ry + by,
         rz + bz
@@ -130,7 +130,7 @@ export function <span class="fstat-no" title="function not covered" >Vec3RotateZ
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu May 27 2021 12:18:03 GMT+0200 (hora de verano de Europa central)
+                at Tue Jun 01 2021 16:58:24 GMT+0200 (hora de verano de Europa central)
             </div>
         </div>
         <script src="../../prettify.js"></script>
