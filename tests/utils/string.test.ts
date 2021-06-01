@@ -1,4 +1,4 @@
-import { UppercaseFirst } from '../../../phaser-genesis/src/utils/string';
+import { RemoveAt, Reverse, UppercaseFirst } from '../../../phaser-genesis/src/utils/string';
 
 describe("String - tests", () =>
 {
@@ -9,12 +9,18 @@ describe("String - tests", () =>
         expect(result).toEqual(match);
     });
 
-    // TODO: Make library
-    test('Test UUID', () =>
+    test('Test Reverse', () =>
     {
-        const match = /([0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[8-9a-b][0-9A-F]{3}-[0-9A-F]{12}){1}/i;
-        const result = "ebf4c854-fc57-4d35-a7d8-3e454e8fdc99";
-        expect(result).toMatch(match);
+        const match = "olleH";
+        const result = Reverse("Hello");     
+        expect(result).toEqual(match);
+    });
+
+    test('Test RemoveAt', () =>
+    {
+        const match = "Hello orld";
+        const result = RemoveAt("Hello World", 7);
+        expect(result).toEqual(match);
     });
 
 });
