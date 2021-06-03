@@ -22,12 +22,15 @@ import
         Vec3Clone,
         Vec3CopyFrom,
         Vec3Cross,
+        Vec3CrossNormalize,
         Vec3Divide,
         Vec3DivideScalar,
         Vec3Dot,
         Vec3Equals,
         Vec3Floor,
         Vec3Fract,
+        Vec3FromCylindricalCoords,
+        Vec3FromSphericalCoords,
         Vec3FuzzyEquals,
         Vec3Hermite,
         Vec3Inverse,
@@ -41,6 +44,7 @@ import
         Vec3Normalize,
         Vec3One,
         Vec3Random,
+        Vec3Reflect,
         Vec3RotateX,
         Vec3RotateY,
         Vec3RotateZ,
@@ -52,6 +56,7 @@ import
         Vec3Subtract,
         Vec3SubtractScalar,
         Vec3TransformMat4,
+        Vec3TransformMat4Zero,
         Vec3Zero
 } from "../../../phaser-genesis/src/math/vec3";
 
@@ -844,4 +849,32 @@ describe("Vec3 - tests", () =>
         expect(resultX.z).toBeCloseTo(matchX.z);
 
     });
+
+    test('Vec3 FromCylindricalCoords', () =>
+    {
+        const result = Vec3FromCylindricalCoords(50, .4, 20);
+        expect(result).toMatchObject(new Vec3(19.470917115432528, 20, 46.05304970014426));
+    });
+    
+    test('Vec3 Reflect', () =>
+    {
+        const vec = new Vec3(10, 10, 10);
+        const normal = Vec3Normalize(new Vec3(20, 20, 20));
+
+        const result = Vec3Reflect(vec, normal);
+        const match = new Vec3(-9.999999999999996, -9.999999999999996, -9.999999999999996);
+        expect(result).toMatchObject(match);
+    });
+    
+    test('Vec3 CrossNormalize', () =>
+    {
+        const vec = new Vec3(200, 100, 40);
+        const vec_b = new Vec3(20, 40, 30);
+
+        const result = Vec3CrossNormalize(vec, vec_b);
+        const match = Vec3Normalize(Vec3Cross(vec, vec_b));
+
+        expect(result).toMatchObject(match);
+    });
+
 });
